@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    {% if not request.session.Nombre and not request.session.Email or request.session.Role != "Profesor" %}
+	<script>
+		window.location.href = "/login_profesores/?message=No%20se%20puede%20acceder%20a%20esta%20sección%20sin%20haber%20iniciado%20sesión%20como%20profesor"
+	</script>
+	{% endif %}
+
+    <nav class="nav">
+        <div class="nav__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            <h3>Pingui</h3>
+        </div>
+        <ul class="nav__items">
+            <li class="nav__item"><a href="/profesores/dashboard/">Dashboard</a></li> 
+            <li class="nav__item"><a href="/profesores/estudiantes/">Estudiantes</a></li>
+            <li class="nav__item"><a href="/profesores/responsables/">Responsables</a></li>
+            <li class="nav__item"><a href="/profesores/actividades/">Actividades</a></li> 
+            <li class="nav__item nav__item--user">
+                 <figure>
+                     <img src="{% static 'assets/img/professor_logo.webp' %}" class="user__logo">
+                 </figure>
+                 <div class="user__content">
+                     <h3 class="user__name">{{ request.session.Nombre }}</h3>
+                     <p class="user__role">Profesora</p>
+                 </div>
+            </li> 
+           <li class="nav__item nav__item--logout"><a href="/logout/"><i class="ri-logout-box-line"></i></a></li> 
+        </ul>
+    </nav>
+
+    <main class="main">
+        <h1>Agregar Temática</h1>
+        <section class="login__section">
+            <div class="login__container">
+                <form action="/profesores/tematicas/createTematica/" method="post" class="login__form">
+                    {% csrf_token %}
+                    <div class="form__group">
+                        <label for="tematica" class="form__label">Nombre de la temática</label>
+                        <input type="text" name="tematica" id="tematica" class="form__input" placeholder="E.j. Continentes del mundo">
+                    </div>
+                    <div class="form__group">
+                        <label for="descripcion" class="form__label">Descripción de la temática</label>
+                        <input type="text" name="descripcion" id="descripcion" class="form__input" placeholder="Añade una descripción de la temática...">
+                    </div>
+                    <div class="form__group full">
+                        <label for="materia" class="form__label">Materia</label>
+                        <select name="materia" id="materia" class="form__input">
+                            <option value="" selected>Selecciona una opción</option>
+                            {% for m in Materia %}
+                                <option value="{{m.id}}">{{m.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form__buttons">
+                        <button type="submit" class="form__button form__button--primary">CREAR TEMATICA</button>
+                        <a href="/profesores/tematicas/" class="form__button form__button--cta">REGRESAR</a>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="footer__grid">
+                <div class="footer__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+                    <h3>Pingui</h3>
+                </div>
+                <h4 class="footer__right">Plataforma Educativa</h4>
+            </div>
+            <p class="copy">&copy; 2025 Derechos Reservados</p>
+        </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/validateForm.js' %}"></script>
+  </body>
+</html>

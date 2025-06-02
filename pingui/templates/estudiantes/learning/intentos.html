@@ -1,0 +1,88 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/crud.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+  </head>
+  <body>
+    {% if not request.session.Nombre and not request.session.Email or request.session.Role != "Estudiante" %}
+	<script>
+		window.location.href = "/login_estudiantes/?message=No%20se%20puede%20acceder%20a%20esta%20sección%20sin%20haber%20iniciado%20sesión%20como%20estudiante"
+	</script>
+	{% endif %}
+
+    <nav class="nav">
+        <div class="nav__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            <h3>Pingui</h3>
+        </div>
+        <ul class="nav__items">
+           <li class="nav__item"><a href="/estudiantes/dashboard/">Inicio</a></li> 
+           <li class="nav__item"><a href="/estudiantes/actividades/">Actividades</a></li> 
+           <li class="nav__item nav__item--user">
+                <figure>
+                    <img src="{% static 'assets/img/student_logo.png' %}" class="user__logo">
+                </figure>
+                <div class="user__content">
+                    <h3 class="user__name">{{ request.session.Nombre }}</h3>
+                    <p class="user__role">Estudiante</p>
+                </div>
+           </li> 
+           <li class="nav__item nav__item--logout"><a href="/logout/"><i class="ri-logout-box-line"></i></a></li> 
+        </ul>
+    </nav>
+
+    <main class="main">
+        <div class="table__description">
+            <h1>Mis Intentos - {{Actividad}}</h1>
+            <a href="/estudiantes/actividades/" class="table__cta">Regresar a Pingui</a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Fecha y Hora</th>
+                    <th>Puntaje</th>
+                    <th>Nota Cualitativa</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% load tz %}
+
+                {% for i in Intentos %}
+                    <tr>
+                        <td>{{ i.fecha_hora|date:"d \\d\\e F \\d\\e Y, H:i" }}</td>
+                        <td>{{i.puntaje}}</td>
+                        <td>{{ i.notaCualitativa|capfirst }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="footer__grid">
+                <div class="footer__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+                    <h3>Pingui</h3>
+                </div>
+                <h4 class="footer__right">Plataforma Educativa</h4>
+            </div>
+            <p class="copy">&copy; 2025 Derechos Reservados</p>
+        </div>
+    </footer>
+
+  </body>
+</html>

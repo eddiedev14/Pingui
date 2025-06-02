@@ -1,0 +1,283 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/viewActivity.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js" integrity="sha512-467grL09I/ffq86LVdwDzi86uaxuAhFZyjC99D6CC1vghMp1YAs+DqCgRvhEtZIKX+o9lR0F2bro6qniyeCMEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+  </head>
+  <body>
+    {% if not request.session.Nombre and not request.session.Email or request.session.Role != "Profesor" %}
+	<script>
+		window.location.href = "/login_profesores/?message=No%20se%20puede%20acceder%20a%20esta%20sección%20sin%20haber%20iniciado%20sesión%20como%20profesor"
+	</script>
+	{% endif %}
+
+    <nav class="nav">
+        <div class="nav__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            <h3>Pingui</h3>
+        </div>
+        <ul class="nav__items">
+           <li class="nav__item"><a href="/profesores/dashboard/">Dashboard</a></li> 
+           <li class="nav__item"><a href="/profesores/estudiantes/">Estudiantes</a></li>
+           <li class="nav__item"><a href="/profesores/responsables/">Responsables</a></li>
+           <li class="nav__item"><a href="/profesores/actividades/">Actividades</a></li> 
+           <li class="nav__item nav__item--user">
+                <figure>
+                    <img src="{% static 'assets/img/professor_logo.webp' %}" class="user__logo">
+                </figure>
+                <div class="user__content">
+                    <h3 class="user__name">{{ request.session.Nombre }}</h3>
+                    <p class="user__role">Profesora</p>
+                </div>
+           </li> 
+           <li class="nav__item nav__item--logout"><a href="/logout/"><i class="ri-logout-box-line"></i></a></li> 
+        </ul>
+    </nav>
+
+    <form action="#" method="post" id="activity">
+        {% csrf_token %}
+        {% if Actividad.imagen %}
+            <h1 class="form__title">¡Es hora de editar tu actividad!</h1>
+        {% else %}
+            <h1 class="form__title">¡Es hora de crear tu actividad!</h1>
+        {% endif %}
+        
+        <section class="activity__general">
+            <div class="general__container">
+                <div class="general__left">
+                    <h2>Información General</h2>
+                    <div class="general__form">
+                        <div class="form__group">
+                            <label for="nombre" class="form__label">Nombre de la Actividad</label>
+                            <input type="text" name="nombre" id="nombre" class="form__input" placeholder="E.j. Comunicativos" value="{{ Actividad.nombre|default_if_none:'' }}">
+                        </div>
+                        <div class="form__group">
+                            <label for="descripcion" class="form__label">Descripción de la Actividad</label>
+                            <input type="text" name="descripcion" id="descripcion" class="form__input" placeholder="E.j. Comunicativos" value="{{ Actividad.descripcion|default_if_none:'' }}">
+                        </div>
+                        <div class="form__group">
+                            <label for="materia" class="form__label">Materia</label>
+                            <select name="materia" id="materia" class="form__input">
+                                <option value="" selected>Selecciona una opción</option>
+                                {% for m in Materia %}
+                                    {% if Actividad.materia_id == m.id %}
+                                        <option value="{{ m.id }}" selected>{{ m.nombre }}</option>
+                                    {% else %}
+                                        <option value="{{ m.id }}">{{ m.nombre }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form__group">
+                            <label for="tematica" class="form__label">Temática</label>
+                            <select name="tematica" id="tematica" class="form__input">
+                                <option value="" selected>Selecciona una opción</option>
+                                {% for t in TematicaSeleccionadas %}
+                                    {% if Actividad.tematica_id == t.id %}
+                                        <option value="{{ t.id }}" selected>{{ t.nombre }}</option>
+                                    {% else %}
+                                        <option value="{{ t.id }}">{{ t.nombre }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form__buttons">
+                        {% if Actividad %}
+                            <button type="submit" class="form__button form__button--primary">ACTUALIZAR ACTIVIDAD</button>
+                        {% else %}
+                            <button type="submit" class="form__button form__button--primary">CREAR ACTIVIDAD</button>
+                        {% endif %}
+
+                        <button type="button" class="form__button form__button--secondary">CREAR PREGUNTA</button>
+
+                        {% if Actividad %}
+                            <button type="button" class="form__button form__button--delete">ELIMINAR ACTIVIDAD</button>
+                            <a href="/profesores/actividades/calificaciones/{{ Actividad.id }}" class="grades__cta"><i class="ri-survey-fill"></i></a>
+                            {% if Actividad.estado == "Activo" %}
+                                <button type="button" class="form__button form__button--archive">ARCHIVAR ACTIVIDAD</button>
+                            {% else %}
+                                <button type="button" class="form__button form__button--archive">DESARCHIVAR ACTIVIDAD</button>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="general__right">
+                    <h2>Foto de la Actividad</h2>
+                    <p>Sube una foto para que los estudiantes identifiquen tu actividad (JPG, JPEG)</p>
+                    <div class="container">
+                        <div class="folder">
+                            <div class="front-side">
+                            <div class="tip"></div>
+                            <div class="cover"></div>
+                            </div>
+                            <div class="back-side cover"></div>
+                        </div>
+                        <label class="custom-file-upload">
+                            <input class="title" type="file" id="imagen_actividad" accept="image/jpg, image/jpeg"/>
+                            {% if Actividad.imagen %}
+                                Cambiar Imagen
+                            {% else %}
+                                Elegir Archivo
+                            {% endif %}
+                        </label>
+                    </div>
+                    {% if Actividad.imagen %}
+                        <img src="/static/assets/{{ Actividad.imagen }}" id="image__preview" alt="Imagen actual" style="width: 100%; margin-top: 10px;">
+                        <input type="hidden" id="imagen_actual" value="{{ Actividad.imagen }}">
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        {% if Pregunta %}
+            {% for p in Pregunta %}
+                <section class="activity__question" data-questionid="{{ p.id }}">
+                    <div class="question__container">
+                        <div class="activity__actions">
+                            <button type="button" class="activity__btn activity__btn--delete"><i class="ri-delete-bin-7-fill"></i></button>
+                            <label class="activity__btn activity__btn--upload"><i class="ri-upload-2-fill"></i></label>
+                        </div>
+                        <input type="file" name="imagen_pregunta" class="file__imagen__pregunta" accept="image/png" style="scale: 0;">
+                        <input type="hidden" class="imagen_actual_pregunta" value="{{ p.imagen }}">
+                        <h2>Pregunta #{{ forloop.counter }}</h2>
+                        <div class="question__form">
+                            <div class="form__group">
+                                <label class="form__label">Tipo de Pregunta</label>
+                                <select name="tipo_pregunta" class="form__input form__input--tipo_pregunta">
+                                    {% if p.tipo == 'seleccion_multiple' %}
+                                        <option value="seleccion_multiple" selected>Selección múltiple</option>
+                                        <option value="verdadero_falso">Verdadero o falso</option>
+                                    {% else %}
+                                        <option value="seleccion_multiple">Selección múltiple</option>
+                                        <option value="verdadero_falso" selected>Verdadero o falso</option>
+                                    {% endif %}
+                                </select>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Pregunta</label>
+                                <input type="text" name="pregunta" class="form__input form__input--pregunta" value="{{ p.pregunta }}">
+                            </div>
+        
+                            {% if p.tipo == 'seleccion_multiple' %}
+                                <div class="divider"></div>
+                                <div class="opciones">
+                            {% else %}
+                                <div class="divider" style="display: none;"></div>
+                                <div class="opciones" style="display: none;">            
+                            {% endif %}
+                        
+                                <div class="form__group">
+                                    <label class="form__label">Opción A</label>
+                                    <input type="text" name="opcion_a" class="form__input form__input--opcion_a" value="{{ p.opciones_list.0 }}">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Opción B</label>
+                                    <input type="text" name="opcion_b" class="form__input form__input--opcion_b" value="{{ p.opciones_list.1 }}">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Opción C</label>
+                                    <input type="text" name="opcion_c" class="form__input form__input--opcion_c" value="{{ p.opciones_list.2 }}">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Opción D</label>
+                                    <input type="text" name="opcion_d" class="form__input form__input--opcion_d" value="{{ p.opciones_list.3 }}">
+                                </div>
+                            </div>
+
+                            <div class="divider"></div>
+                            <div class="form__group form__group--full">
+                                <label class="form__label">Respuesta Correcta</label>
+                                <input type="text" name="respuesta" class="form__input form__input--respuesta" value="{{ p.respuesta_correcta }}">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            {% endfor %}
+        {% endif %}
+
+        <template id="question__template">
+            <section class="activity__question">
+                <div class="question__container">
+                    <div class="activity__actions">
+                        <button type="button" class="activity__btn activity__btn--delete"><i class="ri-delete-bin-7-fill"></i></button>
+                        <label class="activity__btn activity__btn--upload"><i class="ri-upload-2-fill"></i></label>
+                    </div>
+                    <input type="file" class="file__imagen__pregunta" name="imagen_pregunta" accept="image/png" style="scale: 0;">
+                    <h2></h2>
+                    <div class="question__form">
+                            <div class="form__group">
+                                <label for="tipo" class="form__label">Tipo de Pregunta</label>
+                                <select name="tipo" class="form__input form__input--tipo_pregunta">
+                                    <option value="seleccion_multiple">Selección múltiple</option>
+                                    <option value="verdadero_falso">Verdadero o falso</option>
+                                </select>
+                            </div>
+                            <div class="form__group">
+                                <label class="form__label">Pregunta</label>
+                                <input type="text" name="pregunta" class="form__input form__input--pregunta" placeholder="E.j. ¿Cuánto es 2 + 2?">
+                            </div>
+                            <div class="divider"></div>
+                            <div class="opciones">
+                                <div class="form__group">
+                                    <label class="form__label">Opción A</label>
+                                    <input type="text" name="opcion_a" class="form__input form__input--opcion_a" placeholder="E.j. 1">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Opción B</label>
+                                    <input type="text" name="opcion_b" class="form__input form__input--opcion_b" placeholder="E.j. 2">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Opción C</label>
+                                    <input type="text" name="opcion_c" class="form__input form__input form__input--opcion_c" placeholder="E.j. 3">
+                                </div>
+                                <div class="form__group">
+                                    <label class="form__label">Opción D</label>
+                                    <input type="text" name="opcion_d" class="form__input form__input form__input--opcion_d" placeholder="E.j. 4">
+                                </div>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="form__group form__group--full">
+                                <label class="form__label">Respuesta Correcta</label>
+                                <input type="text" name="respuesta" class="form__input form__input form__input--respuesta" placeholder="E.j. A / Verdadero">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </template>
+    </form>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="footer__grid">
+                <div class="footer__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+                    <h3>Pingui</h3>
+                </div>
+                <h4 class="footer__right">Plataforma Educativa</h4>
+            </div>
+            <p class="copy">&copy; 2025 Derechos Reservados</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/activity.js' %}"></script>
+  </body>
+</html>

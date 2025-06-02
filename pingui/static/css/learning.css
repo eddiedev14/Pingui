@@ -1,0 +1,361 @@
+:root{
+    --primary: #008FD7;
+    --dark: #1E1E1E;
+    --text: #464646;
+}
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    scroll-behavior: smooth;
+}
+
+span{
+    color: var(--primary);
+}
+
+body{
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    overflow: hidden;
+}
+
+input, span, button{
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+}
+
+/* Preloader */
+
+.preloader {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+    position: fixed;
+    inset: 0;
+    z-index: 99;
+}
+
+.preloader.hide {
+    opacity: 0;
+}
+
+/* Path */
+
+.path{
+    width: 100%;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    position: relative;
+}
+
+.path__1{
+    background-image: url("/static/assets/img/path_1.png");
+}
+
+.path__2{
+    background-image: url("/static/assets/img/path_2.png");
+}
+
+.path__3{
+    background-image: url("/static/assets/img/path_3.png");
+}
+
+.button__back{
+    width: 40px;
+    height: 40px;
+    background-color: rgb(222, 70, 70);
+    color: #fff;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: 5px;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.not__found{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.not__found__modal{
+    width: 350px;
+    background-color: #fff;
+    border-radius: 12px;
+    display: flex;
+    padding: 12px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.not__found__modal img{
+    width: 50%;
+}
+
+.not__found__modal a{
+    display: inline-block;
+    width: 100%;
+    background-color: var(--primary);
+    color: #fff;
+    padding: 8px;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.topics{
+    position: absolute;
+    top: 30px;
+    left: 40px;
+    list-style-type: none;
+    display: flex;
+    gap: 12px;
+}
+
+.topic__btn{
+    padding: 6px 16px;
+    background-color: #fff;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-weight: bold;
+    border-radius: 20px;
+    outline: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.topic__btn--active{
+    background-color: var(--primary);
+    color: #fff;
+}
+
+.icon{
+    position: absolute;
+}
+
+.icon button{
+    width: 64px;
+    height: 64px;
+    font-size: 48px;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    outline: none;
+    border: none;
+}
+
+.icon:nth-of-type(1){
+    top: 500px;
+    left: 180px;
+}
+
+.icon:nth-of-type(2){
+    top: 370px;
+    left: 180px;
+}
+
+.icon:nth-of-type(3){
+    top: 300px;
+    right: 320px;
+}
+
+.icon:nth-of-type(4){
+    top: 410px;
+    right: 250px;
+}
+
+.icon:nth-of-type(5){
+    top: 130px;
+    right: 280px;
+}
+
+.icon--pending button{
+    background-color: #f4a259;
+}
+
+.icon--complete button{
+    background-color: #7ae582;
+}
+
+/* Dialog */
+dialog{
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 350px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+.fade-out {
+    animation: fadeOut 0.3s ease-in-out forwards;
+}
+
+.modal__close{
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+dialog img{
+    width: 100%;
+    height: 100%;
+    max-height: 180px;
+    object-fit: cover;
+}
+
+.modal__content{
+    padding: 10px 20px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+}
+
+.modal__title{
+    font-size: 18px;
+}
+
+.modal__description{
+    font-size: 14px;
+    opacity: .8;
+    margin-bottom: 10px;
+}
+
+.modal__list{
+    list-style-type: none;
+    display: flex;
+    gap: 4px;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.modal__list li{
+    font-size: 12px;
+    background-color: var(--primary);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+.modal__buttons{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.modal__button{
+    padding: 4px 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    text-decoration: none;
+    font-size: 14px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.modal__button--try{
+    background-color: #4fbf56;
+    color: #fff;
+}
+
+.modal__button--tries{
+    background-color: var(--primary);
+    color: #fff;
+}
+
+/* Pagination */
+
+.pagination__btn{
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: #fff;
+    color: var(--primary);
+    cursor: pointer;
+    font-size: 35px;
+    outline: none;
+    border: 1px solid var(--primary);
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: none;
+}
+
+.pagination__btn--previous{
+    left: 40px;
+}
+
+.pagination__btn--next{
+    right: 40px;
+}

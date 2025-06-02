@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/learning.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body data-materiainicial="{{ materia_inicial_id }}">
+    {% if not request.session.Nombre and not request.session.Email or request.session.Role != "Estudiante" %}
+	<script>
+		window.location.href = "/login_estudiantes/?message=No%20se%20puede%20acceder%20a%20esta%20sección%20sin%20haber%20iniciado%20sesión%20como%20estudiante"
+	</script>
+	{% endif %}
+  
+    <div class="preloader">
+      <img src="{% static 'assets/img/PreLoader.png' %}" class="preloader" alt="PreLoader">
+      <audio src="{% static 'assets/audio/PreLoader.mp3' %}"></audio>
+    </div>
+
+    <div class="path path__1">
+      <a href="/estudiantes/dashboard/" class="button__back"><i class="ri-logout-circle-line"></i></a>
+
+      {% if not materias %}
+        <div class="not__found">
+          <div class="not__found__modal">
+            <img src="{% static 'assets/img/page_not_found.png' %}" alt="Not Found">
+            <h2>¡Ops!</h2>
+            <p>¡Parece que no hay actividades por ahora, Vuelve más tarde!</p>
+            <a href="/estudiantes/dashboard/">Regresar</a>
+          </div>
+        </div>
+      {% endif %}
+
+      <ul class="topics">
+        {% for materia in materias %}
+          <li class="topic">
+            {% if forloop.first %}
+              <button
+                class="topic__btn topic__btn--active"
+                data-id="{{ materia.id }}">
+                {{ materia.nombre }}
+              </button>
+            {% else %}
+              <button
+                class="topic__btn"
+                data-id="{{ materia.id }}">
+                {{ materia.nombre }}
+              </button>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+
+      <!-- Icons -->
+      <div class="activities__container"></div>
+
+      <audio id="ambient_sound"></audio>
+
+      <dialog id="modal">
+        <button class="modal__close"><i class="ri-close-line"></i></button>
+        <img src="{% static 'assets/activities/thumbnails/Prueba.png' %}" alt="Imagen Modal">
+        <div class="modal__content">
+          <h2 class="modal__title"></h2>
+          <p class="modal__description"></p>
+          <ul class="modal__list">
+            <li class="modal__course"></li>
+            <li class="modal__topic"></li>
+          </ul>
+          <div class="modal__buttons">
+            <a href="" class="modal__button modal__button--try">Realizar Actividad</a>
+            <a href="" class="modal__button modal__button--tries">Ver mis Intentos</a>
+          </div>
+        </div>
+      </dialog>
+
+      <!-- Pagination -->
+      <button class="pagination__btn pagination__btn--previous"><i class="ri-arrow-left-s-line"></i></button>
+      <button class="pagination__btn pagination__btn--next"><i class="ri-arrow-right-s-line"></i></button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/learning.js' %}"></script>
+  </body>
+</html>

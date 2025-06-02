@@ -1,0 +1,240 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/studentsDashboard.css' %}" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+
+    <link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    {% if not request.session.Nombre and not request.session.Email or request.session.Role != "Estudiante" %}
+	<script>
+		window.location.href = "/login_estudiantes/?message=No%20se%20puede%20acceder%20a%20esta%20sección%20sin%20haber%20iniciado%20sesión%20como%20estudiante"
+	</script>
+	{% endif %}
+
+    <nav class="nav">
+        <div class="nav__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            <h3>Pingui</h3>
+        </div>
+        <ul class="nav__items">
+           <li class="nav__item"><a href="/estudiantes/dashboard/">Inicio</a></li> 
+           <li class="nav__item"><a href="/estudiantes/actividades/">Actividades</a></li> 
+           <li class="nav__item nav__item--user">
+                <figure>
+                    <img src="{% static 'assets/img/student_logo.png' %}" class="user__logo">
+                </figure>
+                <div class="user__content">
+                    <h3 class="user__name">{{ request.session.Nombre }}</h3>
+                    <p class="user__role">Estudiante</p>
+                </div>
+           </li> 
+           <li class="nav__item nav__item--logout"><a href="/logout/"><i class="ri-logout-box-line"></i></a></li> 
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="hero__content">
+            <h1 class="hero__title">¡Llegó la hora de <span>aprender jugando!</span></h1>
+            <p class="hero__paragraph">Prepárate para una nueva aventura llena de juegos, desafíos y aprendizajes divertidos. Aquí podrás descubrir nuevos temas, completar actividades educativas y ganar estrellas por tu esfuerzo. ¡Aprender nunca fue tan emocionante!</p>
+            <a href="/estudiantes/actividades/" class="hero__cta">¡Empezar Ahora!</a>
+        </div>
+        <img src="{% static 'assets/img/kids_dashboard.png' %}" alt="Hero Illustration">
+    </section>
+
+    <main class="main">
+        <div class="main__content">
+            <h2 class="main__title">¡Explora temas apasionantes y diviertete hasta el cansancio!</h2>
+            <p class="main__paragraph">Aquí no hay clases aburridas, ¡solo aventuras increíbles! Explora mundos donde los números tienen poderes, las letras cuentan historias mágicas y cada tema es una puerta secreta hacia el conocimiento. Juega, aprende y gana medallas por tu ingenio. ¡Estás a punto de convertirte en un verdadero genio aventurero!</p>
+            <a href="/estudiantes/actividades/" class="main__cta">¡Explora tus materias! 📚</a>
+        </div>
+        <img src="{% static 'assets/img/kid_on_books.png' %}" alt="Main Illustration">
+    </main>
+
+    <section class="games">
+        <h2 class="games__title">¡Diviertete con nuestra selección de Juegos! 🚀</h2>
+        <p class="games__paragraph">Descubre juegos llenos de retos, risas y aprendizaje. Cada partida es una nueva oportunidad para poner a prueba tu ingenio y convertirte en un maestro del saber mientras te diviertes al máximo. ¡Aprender nunca fue tan emocionante!</p>
+        
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/burbujas_vocales.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Reconoce las Vocales</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Vocales</li>
+                                <li class="tag">Ordenamiento</li>
+                            </ul>
+                            <a href="https://arbolabc.com/juegos-de-vocales/juguemos-con-burbujas-vocales" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/puma_coma.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Puma Come</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Sumas</li>
+                                <li class="tag">Números del 1 al 10</li>
+                            </ul>
+                            <a href="https://arbolabc.com/juegos-de-sumas/puma-come-sumas-hasta-10" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/ratita_rita.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Ratita Rita</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Sumas</li>
+                                <li class="tag">Números del 1 al 20</li>
+                            </ul>
+                            <a href="https://arbolabc.com/juegos-de-sumas/sumemos-con-ratita-rita-hasta-20" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/decoremos_pasteles.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Decoremos Pasteles</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Inglés</li>
+                                <li class="tag">Colores</li>
+                            </ul>
+                            <a href="https://arbolabc.com/colores-en-ingles/decoremos-pasteles-con-don-sapo" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/que_desorden.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">¡Qué desorden!</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Inglés</li>
+                                <li class="tag">Días de la semana</li>
+                            </ul>
+                            <a href="https://arbolabc.com/vocabulario-en-ingles/que-desorden-dias-de-semana" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/memoria_animales.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Memoria Animales</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Memoria</li>
+                                <li class="tag">Animales</li>
+                            </ul>
+                            <a href="https://arbolabc.com/juegos-de-memoria/memoria-animales" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/simon_dice.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Simón Dice</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Colores</li>
+                            </ul>
+                            <a href="https://arbolabc.com/juegos-de-memoria/simon-dice" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/rompecabezas_dinosaurio.jpg' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Rompecabezas Dinosaurio</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Rompecabezas</li>
+                            </ul>
+                            <a href="https://arbolabc.com/rompecabezas-para-ni%C3%B1os/dinosaurios" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="card">
+                        <img src="{% static 'assets/img/games/topos.png' %}" alt="Imagen de Juego">
+                        <div class="card__content">
+                            <h3 class="cards__game">Topos super locos</h3>
+                            <ul class="cards__tags">
+                                <li class="tag">Agilidad</li>
+                                <li class="tag">Concentración</li>
+                            </ul>
+                            <a href="https://arbolabc.com/juegos-de-estrategia/topos-super-locos" target="_blank" class="card__cta">¡Jugar Ahora!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </section>
+    
+    <!-- Oso animado -->
+    <img src="{% static 'assets/img/oso_animado.png' %}" id="bear" class="bear__character" alt="Oso Animado">
+    <audio src="{% static 'assets/audio/audio.mp3' %}" id="audio"></audio>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="footer__grid">
+                <div class="footer__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+                    <h3>Pingui</h3>
+                </div>
+                <h4 class="footer__right">Plataforma Educativa</h4>
+            </div>
+            <p class="copy">&copy; 2025 Derechos Reservados</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <script>
+        const swiper = new Swiper('.swiper', {
+            slidesPerView: 3, // 👈 Muestra 3 cards por vista
+            spaceBetween: 20, // Espacio entre slides (opcional)
+            loop: true,
+            navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+            },
+        });
+
+        const bear = document.querySelector("#bear");
+        const audio = document.querySelector("#audio");
+
+        bear.addEventListener("mouseenter", () => {
+            audio.play();
+        })
+    </script>
+  </body>
+</html>

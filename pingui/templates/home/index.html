@@ -1,0 +1,103 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <nav class="nav">
+        <div class="nav__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            <h3>Pingui</h3>
+        </div>
+        <ul class="nav__items">
+           <li class="nav__item"><a href="#hero">Inicio</a></li> 
+           <li class="nav__item"><a href="#services">Servicios</a></li> 
+           <li class="nav__item"><a href="#about-us">Sobre Nosotros</a></li> 
+           <li class="nav__item"><a href="/login_estudiantes" class="nav__item--primary">Ingresar</a></li> 
+        </ul>
+    </nav>
+
+    <main class="hero" id="hero">
+        <div class="hero__content">
+            <h1 class="hero__title"><span>¡Aprender</span> nunca fue tan divertido</h1>
+            <p class="hero__paragraph">La plataforma educativa que conecta a docentes, padres y estudiantes con preguntas dinámicas y desafíos únicos. Aprende jugando y alcanza tus metas en un mundo lleno de aprendizaje.</p>
+            <a href="/login_estudiantes" class="hero__link">Accede a pengui</a>
+        </div>
+        <img src="{% static 'assets/img/hero.png' %}" alt="Hero">
+    </main>
+
+    <section class="section" id="services">
+        <div class="section__content">
+            <h3 class="section__title">¿Qué ofrece <span>Pengui</span> para transformar el aprendizaje?</h3>
+            <p class="section__paragraph">En Pengui, combinamos diversión y educación para crear una experiencia única que beneficia a estudiantes, docentes y padres.</p>
+        </div>
+        <div class="services__cards">
+            <div class="services__card">
+                <div class="card__icon">
+                    <i class="ri-file-text-fill"></i>
+                </div>
+                <h4 class="card__title">Crea y personaliza tus evaluaciones</h4>
+                    <p class="card__paragraph">Los docentes pueden diseñar preguntas dinámicas en distintas categorías y niveles de dificultad para adaptarse a las necesidades de sus estudiantes.</p>
+            </div>
+            <div class="services__card">
+                <div class="card__icon">
+                    <i class="ri-graduation-cap-fill"></i>
+                </div>
+                <h4 class="card__title">Explora, aprende y progresa</h4>
+                    <p class="card__paragraph">Los estudiantes disfrutan de un sistema interactivo que los reta con preguntas y actividades en un formato gamificado. Con Pengui, aprender es un juego emocionante.</p>
+            </div>
+            <div class="services__card">
+                <div class="card__icon">
+                    <i class="ri-team-fill"></i>
+                </div>
+                <h4 class="card__title">Involucra a los padres en el aprendizaje</h4>
+                <p class="card__paragraph">Los padres pueden registrar a sus hijos y monitorear su progreso, convirtiéndose en aliados activos en el camino educativo de sus pequeños.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section roles" id="about-us">
+        <div class="section__content">
+            <h3 class="section__title">¿Qué es <span>Pengui?</span></h3>
+            <p class="section__paragraph">Pengui es una plataforma educativa que combina aprendizaje y diversión. Diseñada para niños, permite a los docentes crear cuestionarios interactivos, a los estudiantes aprender jugando y a los padres acompañar su progreso en cada paso del camino.</p>
+        </div>
+        <div class="roles__cards">
+            <div class="role__card">
+                <h4 class="role__title">PARA DOCENTES</h4>
+                <a href="/login_profesores" class="role__cta">¡Ingrese aquí!</a>
+            </div>
+            <div class="role__card">
+                <h4 class="role__title">PARA ESTUDIANTES</h4>
+                <a href="/login_estudiantes" class="role__cta">¡Ingrese aquí!</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="footer__content">
+            <div class="footer__grid">
+                <div class="footer__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+                    <h3>Pingui</h3>
+                </div>
+                <h4 class="footer__right">Plataforma Educativa</h4>
+            </div>
+            <p class="copy">&copy; 2025 Derechos Reservados</p>
+        </div>
+    </footer>
+  </body>
+</html>

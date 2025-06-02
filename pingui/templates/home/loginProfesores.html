@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <nav class="nav">
+        <div class="nav__logo">
+            <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+            <h3>Pingui</h3>
+        </div>
+        <ul class="nav__items">
+           <li class="nav__item"><a href="/">Inicio</a></li> 
+           <li class="nav__item"><a href="/#servicios">Servicios</a></li> 
+           <li class="nav__item"><a href="/#about-us">Sobre Nosotros</a></li> 
+           <li class="nav__item"><a href="/login_estudiantes" class="nav__item--primary">Ingresar</a></li> 
+        </ul>
+    </nav>
+
+    <main class="login">
+        <div class="background"></div>
+        <section class="login__section">
+            <div class="login__container">
+                <div class="login__logo">
+                    <img src="{% static 'assets/img/logo.png' %}" alt="Logo">
+                    <h3>Pingui</h3>
+                </div>
+                <p class="login__message">Bienvenido de vuelta!</p>
+                <h1 class="login__title">Inicia Sesión</h1>
+                <form action="/profesor/signin/" method="post" class="login__form">
+                    {% csrf_token %}
+                    <div class="form__group">
+                        <label for="email" class="form__label">Email del docente</label>
+                        <input type="email" name="email" id="email" class="form__input" placeholder="E.j. profesor@gmail.com">
+                    </div>
+                    <div class="form__group">
+                        <label for="password" class="form__label">Contraseña</label>
+                        <input type="password" name="password" id="password" class="form__input" placeholder="">
+                    </div>
+                    <div class="form__buttons">
+                        <button type="submit" class="form__button form__button--primary">INICIAR SESIÓN</button>
+                        <a href="/login_estudiantes" class="form__button form__button--cta">INGRESAR COMO PINGUI</a>
+                    </div>
+                </form>
+                <p class="form__extra">¿No tienes cuenta? <a href="/registro" class="extra__cta">Crea tu cuenta</a></p>
+            </div>
+        </section>
+        <img src="{% static 'assets/img/professor_login_animated.png' %}" alt="Illustration Login">
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{% static 'js/validateForm.js' %}"></script>
+  </body>
+</html>

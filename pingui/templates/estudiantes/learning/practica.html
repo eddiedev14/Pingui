@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pingui | Plataforma Educativa</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet" href="{% static 'css/practica.css' %}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" integrity="sha512-XcIsjKMcuVe0Ucj/xgIXQnytNwBttJbNjltBV18IOnru2lDPe9KRRyvCXw6Y5H415vbBLRm8+q6fmLUU7DfO6Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{% static 'assets/favicon/favicon-96x96.png' %}" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="{% static 'assets/favicon/favicon.svg' %}" />
+    <link rel="shortcut icon" href="{% static 'assets/favicon/favicon.icon' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/favicon/apple-touch-icon.png' %}" />
+    <meta name="apple-mobile-web-app-title" content="Pingui" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css" integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  </head>
+  <body data-actividad="{{ actividad.id }}">
+    {% if not request.session.Nombre and not request.session.Email or request.session.Role != "Estudiante" %}
+	<script>
+		window.location.href = "/login_estudiantes/?message=No%20se%20puede%20acceder%20a%20esta%20sección%20sin%20haber%20iniciado%20sesión%20como%20estudiante"
+	</script>
+	{% endif %}
+    
+    {% csrf_token %}
+    <div class="instructions">
+        <img src="{% static 'assets/img/oso_instrucciones.png' %}" alt="Mascota Instrucciones">
+        <div class="instructions__content">
+            <h2 class="instructions__title">Instruccciones</h2>
+            <ul class="instructions__list">
+                <li>Estás a punto de comenzar una aventura llena de preguntas divertidas y desafíos emocionantes. 🧠✨</li>
+                <li>Lee con atención, piensa bien tus respuestas y no tengas miedo de equivocarte… ¡lo importante es intentarlo!</li>
+                <li>Cada respuesta te llevará un paso más cerca de completar la misión. 🚀</li>
+                <li>¿Listo para demostrar lo que sabes? ¡Haz clic en "Comenzar" y que empiece la diversión! 🎉</li>
+            </ul>
+            <button class="instructions__button">¡Comenzar!</button>
+        </div>
+    </div>
+
+    <div class="quiz__container hide" id="quiz">
+        <div class="progress__bar">
+            <div class="progress__fill"><span class="progress__text"></span></div>
+        </div>
+
+        <div class="question__area">
+            <!-- Aquí se mostrará la pregunta actual -->
+        </div>
+
+        <div class="quiz__buttons">
+            <button class="quiz__button next__button">Continuar</button>
+        </div>
+    </div>
+
+    <audio id="gameSound"></audio>
+    <div id="bloqueo-interaccion"></div>
+
+    <div class="result hide">
+        <img src="" alt="Imagen de resultado">
+        <div class="result__content">
+            <h2 class="result__title"></h2>
+            <p class="result__message"></p>
+            <div class="result__cards">
+                <div class="result__card">
+                    <div class="card__top">
+                        <i class="ri-trophy-fill"></i>
+                        <h3 class="card__title">Calificación</h3>
+                    </div>
+                    <span class="card__value card__value--grade"></span>
+                </div>
+                <div class="result__card">
+                    <div class="card__top">
+                        <i class="ri-trophy-fill"></i>
+                        <h3 class="card__title">Respuestas Correctas</h3>
+                    </div>
+                    <span class="card__value card__value--correct"></span>
+                </div>
+                <div class="result__card">
+                    <div class="card__top">
+                        <i class="ri-trophy-fill"></i>
+                        <h3 class="card__title">Respuestas Incorrectas</h3>
+                    </div>
+                    <span class="card__value card__value--incorrect"></span>
+                </div>
+            </div>
+            <div class="result__buttons">
+                <a href="#" class="result__button result__button--restart">Reintentar Actividad</a>
+                <a href="/estudiantes/actividades/" class="result__button result__button--back">Regresar</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="{% static 'js/practica.js' %}"></script>
+  </body>
+</html>
