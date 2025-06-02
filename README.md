@@ -11,15 +11,15 @@ Con un enfoque pedagógico y tecnológico, esta herramienta apoya a profesores y
 
 ## Capturas de Pantalla
 
-![App Screenshot](/pingui/pingui/static/assets/screenshots/home.png)
+![App Screenshot](/pingui/static/assets/screenshots/home.png)
 
-![App Screenshot](/pingui/pingui/static/assets/screenshots/activities.png)
+![App Screenshot](/pingui/static/assets/screenshots/activities.png)
 
-![App Screenshot](/pingui/pingui/static/assets/screenshots/create_activities.png)
+![App Screenshot](/pingui/static/assets/screenshots/create_activities.png)
 
-![App Screenshot](/pingui/pingui/static/assets/screenshots/learning.png)
+![App Screenshot](/pingui/static/assets/screenshots/learning.png)
 
-![App Screenshot](/pingui/pingui/static/assets/screenshots/test.png)
+![App Screenshot](/pingui/static/assets/screenshots/test.png)
 
 ## Funcionalidades
 
